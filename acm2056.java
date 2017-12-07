@@ -1,35 +1,46 @@
-import java.util.*;
-import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeMap;
 
-class acm2056 {
-    public static void main(String args[]) {
-        Map<String, Integer> wordsmap = new HashMap<>();
-
+public class acm2056{
+    public static void main(String[] args)
+    {
         Scanner in = new Scanner(System.in);
+        HashMap<String, Integer> wordToCount = new HashMap<>();
+        Map<String, Integer> MapTree = new TreeMap<>();
 
-        while(in.hasNext()) {//пока есть следующий элемент
-            for (String word : in.nextLine().toLowerCase().split(" ")) {
-                if (word.isEmpty()) {
-                    continue;
-                }
-                wordsmap.put(word, wordsmap.getOrDefault(word, 0) + 1);
-                System.out.println(wordsmap.getOrDefault(word, 0) + 1);
 
+       while(in.hasNext()) {
+           for (String words : in.nextLine().toLowerCase().split(" ")) {
+
+               if (!wordToCount.containsKey(words))
+               {
+                   wordToCount.put(words, 0);
+               }
+               wordToCount.put(words, wordToCount.get(words)+ 1);
+                         }
+       }
+
+        int maxValue = 0;
+        for (String words : wordToCount.keySet())
+        {
+            if (wordToCount.get(words)>maxValue) {
+                maxValue = wordToCount.get(words);
             }
+
         }
-
-
-        int max = Collections.max(wordsmap.values());
-        Set<String> treeSet = new TreeSet<>();
-        for (String s : wordsmap.keySet()) {
-            Integer count = wordsmap.get(s);
-            if (count.intValue() == max) {
-                treeSet.add(s);
-            }
+        for (String words : wordToCount.keySet()) {
+             if (wordToCount.get(words)== maxValue) {
+                 MapTree.put(words, wordToCount.get(words));
+             }
         }
+        for(Map.Entry e : MapTree.entrySet()){
 
-        for (String s:treeSet) {
-            System.out.println(s);
+            System.out.println(e.getKey());
         }
     }
 }
+
+
+
